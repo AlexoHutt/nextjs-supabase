@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 import {
   Card,
   CardContent,
@@ -9,21 +9,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Enter your credentials to continue</CardDescription>
+          <CardTitle>Create an account</CardTitle>
+          <CardDescription>Enter your details to get started</CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <SignupForm />
         </CardContent>
         <CardFooter className="justify-center text-sm text-muted-foreground">
-          Don&apos;t have an account?&nbsp;
-          <Link href="/signup" className="underline underline-offset-4 hover:text-foreground">
-            Sign up
+          Already have an account?&nbsp;
+          <Link href="/login" className="underline underline-offset-4 hover:text-foreground">
+            Sign in
           </Link>
         </CardFooter>
       </Card>
