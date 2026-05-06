@@ -1,20 +1,23 @@
-'use client'
+"use client";
 
-import { useActionState } from 'react'
-import { login } from '@/app/actions/auth'
+import { useActionState } from "react";
+import { login } from "@/app/actions/auth";
 
 export default function LoginForm() {
-  const [state, action, pending] = useActionState(login, null)
+  const [state, Login, pending] = useActionState(login, null);
 
   return (
-    <form action={action} className="flex flex-col gap-4 w-full max-w-sm">
+    <form action={Login} className="flex flex-col gap-4 w-full max-w-sm">
       {state?.error && (
         <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-2">
           {state.error}
         </p>
       )}
       <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label
+          htmlFor="email"
+          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        >
           Email
         </label>
         <input
@@ -28,7 +31,10 @@ export default function LoginForm() {
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        >
           Password
         </label>
         <input
@@ -46,8 +52,8 @@ export default function LoginForm() {
         disabled={pending}
         className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
       >
-        {pending ? 'Signing in…' : 'Sign in'}
+        {pending ? "Signing in…" : "Sign in"}
       </button>
     </form>
-  )
+  );
 }
