@@ -14,15 +14,15 @@ export async function proxy(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
+            request.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options),
           );
         },
       },
-    }
+    },
   );
 
   const {
@@ -31,17 +31,20 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  const publicPaths = ["/login", "/signup"];
+  const publicPaths = new Set(["/login", "/signup"]);
+  const isPublic = publicPaths.has(pathname) || pathname.startsWith("/auth/");
 
-  if (!user && !publicPaths.includes(pathname)) {
+  if (!user && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 
-  if (user && publicPaths.includes(pathname)) {
+  if (user && isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 
