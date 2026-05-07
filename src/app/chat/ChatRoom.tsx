@@ -62,14 +62,11 @@ export default function ChatRoom({
       if (session) supabase.realtime.setAuth(session.access_token);
 
       channel = supabase
-        .channel("public:messages")
-        .on(
-          "postgres_changes",
-          { event: "INSERT", schema: "public", table: "messages" },
-          (payload) => {
-            addNewMessage(payload.new as Message);
-          },
-        )
+        .channel("chat_messages")
+        .on("broadcast", { event: "new_message" }, (payload) => {
+          console.log("[realtime] new_message", payload);
+          addNewMessage(payload.payload.data);
+        })
         .subscribe((status, err) => {
           console.log("[realtime] status", status, err ?? "");
         });
@@ -127,7 +124,7 @@ export default function ChatRoom({
                     {isOwn ? "You" : msg.user_email}
                   </span>
                   <span suppressHydrationWarning>
-                    {formatTime(msg.inserted_at)}
+                    {formatTime(msg.created_at)}
                   </span>
                 </div>
                 <div
